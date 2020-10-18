@@ -11,3 +11,150 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+:root {
+/* Let'ts define some global css variables that we can think them as our theme. */
+  --bg: #242526;
+  --bg-accent: #484a4d;
+  --bg-dropdown-item-hover: #525357;
+  --text-color: #dadce1;
+  --nav-size: 60px;
+  --border: 1px solid #474a4d;
+  --border-radius: 8px;
+  --speed: 500ms;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.navbar {
+  /* We gave a fixed height for this class. By using height property. */
+  height: var(--nav-size);
+  background-color: var(--bg);
+  padding: 0 1rem;
+  border-bottom: var(--border);
+}
+
+.navbar__nav {
+  /* We want a flexible row which it's width changes, based on the width of it's parent, so we use % for the width of this class and
+  also we use max-width instead of width, so if width of the screen goes smaller than width of the element which has this class, that
+  element would get smaller. Because we didn't set a stable of fixed width for it by using width prop. So max-width prop shows itself
+  when the screen goes smaller than the element and therefore the element would also goes smaller to fit itself in that screen.
+  But if the screen is wider than element, the element would gets the exact value we used for max-width. So in that case, there is no
+  difference between width and max-width.*/
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+
+  /* We can make all of the children of a flex container, start at the right side of flex container instead of default left side,
+   by saying: justify-content: flex-end; on the flex container. */
+  justify-content: flex-end;
+}
+
+.nav__item {
+  width: calc(var(--nav-size) * .8);
+
+  /* Any element which has this class should display it's children in the center of itself. So: */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav__icon-button {
+/* We want the nav__icon-button in a circular shape.
+We want to scope a new css variable to this class and just this class, because we don't want to use this variable anywhere else, so I
+declared it here. So let's declare --button-size css variable for this class.
+
+var(--nav-size) * .5 gives us a value which is the 50% of --nav-size (because we multiply it by .5 !)
+To make a shape circular, we can apply it a border-radius of 50% and also equal width and height.*/
+  --button-size: calc(var(--nav-size) * .5);
+  width: var(--button-size);
+  height: var(--button-size);
+  border-radius: 50%;
+  background-color: var(--bg-accent);
+  padding: 5px;
+  margin: 2px;
+
+  /* I want to center the children of this class, in the middle of this class:
+  Important: The content of an element is also a child of that element. So we can center the content of an element, by adding display: flex;
+   and justify-content: center; and align-items: center; to that element in order to make the children(like content of that element and
+   child elements of that element) in the center of that parent which has display: flex; and ... .*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 40px;
+  /* If you want an animation like hover animation on an element to takes some time, you can set the transition prop on the NORMAL
+   STATE of that element which for it's value, you set the prop which takes some time to change during that hover or ... animation.
+   In this case, that prop is filter which takes 300ms to change in hover. Now let's also create the hover state of this element. */
+  transition: filter 300ms;
+}
+
+.nav__icon-button:hover {
+  filter: brightness(1.2);
+}
+
+.nav__icon-svg {
+  width: 20px;
+  height: 20px;
+
+  /* Learn: You can use fill property to change the color of an svg element. */
+  fill: var(--text-color);
+}
+
+/*
+Learn: The dropdown menu in the facebook website overlaps slightly on the top navbar and we can acheive that, by using absolute positioning
+ on the thing which is overlapping on other things.
+ So when you see some thing is over or under some other stuff, you can give that thing a position: absolute; and set it's top left and ... .
+ Absolute positioning allows us to explicitly offset an element based on the nearest positioned parent of that element.*/
+.dropdown {
+  /* We specified top: 58px for this class because now this will move .dropdown down by 58px and this means this class will overlap by
+   2px with the top navbar which has a height of 60px.
+   Learn: translate() function in css is just for moving things around.*/
+  position: absolute;
+  top: 58px;
+  width: 300px;
+  transform: translateX(-45%);
+  background-color: var(--bg);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+
+  /* overflow: hidden; will hide any child elements of this class if they overlap this container or get out of it and setting this
+   prop here is crucial. Because we'll be sliding in multiple menus through this container.*/
+  overflow: hidden;
+}
+
+.dropdown__menu-item {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius);
+  transition: background-color var(--speed);
+  padding: .5rem;
+}
+
+/* We want the right icon of the dropdown item to be pushed ALL THE WAY to the right side. So because we are using flexbox, you
+ can set the left margin of the last element that you want to push it all the way to right, to auto and also everything else would also
+ be pushed all the way to the left.*/
+.dropdown__menu-item:hover {
+  background-color: var(--bg-dropdown-item-hover);
+}
+
+.dropdown__menu-item svg {
+  fill: var(--text-color);
+  width: 20px;
+  height: 20px;
+}
+
+.dropdown__icon-right {
+  margin-left: auto;
+}
+
